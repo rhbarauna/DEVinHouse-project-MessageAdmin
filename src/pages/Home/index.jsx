@@ -33,7 +33,7 @@ const Home = () => {
   return (
     <>
       <div>
-        <form class='searchForm'>
+        <form className='searchForm'>
           <select name="channel" id="channel_select">
             <option></option>
             {
@@ -69,7 +69,7 @@ const Home = () => {
               {
                 messages.map(
                   ({id, channel, trigger, timer, message}, idx) => (
-                    <tr>
+                    <tr key={idx}>
                       <td>{channel}</td>
                       <td>{trigger}</td>
                       <td>{timer}</td>
