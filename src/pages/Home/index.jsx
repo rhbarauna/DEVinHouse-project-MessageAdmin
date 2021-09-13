@@ -1,5 +1,5 @@
 import './index.css';
-import { useEffect, useState } from "react";
+import { createElement, useEffect, useState } from "react";
 
 const Home = () => {
   const [channels, setChannels] = useState([]);
@@ -30,10 +30,18 @@ const Home = () => {
     })();
   }, []);
   
+  const handleFormSubmit = (event) => {
+    event.preventDefault(); 
+  }
+
+  const showMessage = (message) => {
+    
+  }
+
   return (
     <>
       <div>
-        <form className='searchForm'>
+        <form className='searchForm' onSubmit={handleFormSubmit}>
           <select name="channel" id="channel_select">
             <option></option>
             {
@@ -68,13 +76,13 @@ const Home = () => {
             <tbody>
               {
                 messages.map(
-                  ({id, channel, trigger, timer, message}, idx) => (
+                  (message, idx) => (
                     <tr key={idx}>
-                      <td>{channel}</td>
-                      <td>{trigger}</td>
-                      <td>{timer}</td>
+                      <td>{message.channel}</td>
+                      <td>{message.trigger}</td>
+                      <td>{message.timer}</td>
                       <td>
-                        <button>Botão</button>
+                        <button onClick={()=>{ showMessage(message)}}>Ver Mensagem</button>
                       </td>
                     </tr>
                   )
@@ -84,8 +92,29 @@ const Home = () => {
           </table>
         </div>
       </div>
+      <Modal 
+        body={modalBody}
+        showModal={showModal}
+
+      />
+      
     </>
   )
 }
 
 export default Home;
+
+const Modal = ({header, body, footer}) => {
+  return (
+    <div className='modalWrapper'>
+      <div className='modalContainer'>
+        <div className='modalBody'>
+        {createElement(body, {})}
+        </div>
+        <div className='modalFooter'>
+          {createElement(footer, {})}
+        </div>
+      </div>
+    </div>
+  )
+}
