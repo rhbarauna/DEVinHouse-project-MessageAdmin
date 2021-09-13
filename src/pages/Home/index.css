@@ -1,0 +1,48 @@
+.tableContainer {
+  overflow: hidden;
+}
+
+.searchForm {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.messagesTable {
+  border-collapse: collapse;
+  margin: auto;
+}
+
+.messagesTable th:first-child {
+  border-radius: 5px 0 0 0;
+}
+.messagesTable th:last-child {
+  border-radius: 0 5px 0 0;
+}
+
+.messagesTable th {
+  background-color: var(--header-background);
+  color: white;
+  height: 45px;
+  padding: 10px;
+}
+
+.messagesTable th,
+.messagesTable td {
+  border-bottom: 1px solid #c1c1c1;
+}
+.messagesTable tr td:first-child {
+  border-left: 1px solid #c1c1c1;
+}
+.messagesTable tr td:last-child {
+  border-right: 1px solid #c1c1c1;
+}
+
+.messagesTable tbody tr td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 70px;
+  padding: 10px 15px;
+  background-color: white;
+}
