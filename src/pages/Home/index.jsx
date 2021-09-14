@@ -1,10 +1,23 @@
 import './index.css';
-import { createElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import ContentWrapper from '../components/ContentWrapper';
+import ForumIcon from '@material-ui/icons/Forum';
+import { Button, FormControl, InputLabel, MenuItem, Select,
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField
+} from '@material-ui/core';
+import {useLocation} from 'react-router-dom';
 
 const Home = () => {
   const [channels, setChannels] = useState([]);
   const [triggers, setTriggers] = useState([]);
   const [messages, setMessages] = useState([]);
+
+  const [formChannel, setFormChannel] = useState('');
+  const [formTrigger, setFormTrigger] = useState('');
+  const [formTimer, setFormTimer] = useState('');
+
+  const location = useLocation();
+  const queryParams = location.search;
 
   useEffect(() => {
     ( async () => {
@@ -24,97 +37,137 @@ const Home = () => {
 
   useEffect(()=>{
     ( async () => {
-      const response = await fetch('api/messages');
+      let url = 'api/messages';
+      if(queryParams) {
+        url+=queryParams;
+      }
+      const response = await fetch(url);
       const msgs = await response.json();
       setMessages(msgs);
     })();
-  }, []);
+  }, [queryParams]);
   
+  useEffect(()=>{
+    const searchParams = new URLSearchParams(queryParams);
+    const channel = searchParams.get('channel')
+    if(channel) {
+      setFormChannel(channel)
+    }
+
+    const trigger = searchParams.get('trigger')
+    if(trigger) {
+      setFormTrigger(trigger)
+    }
+
+    const timer = searchParams.get('timer')
+    if(timer) {
+      setFormTimer(timer)
+    }
+
+  }, [queryParams])
+
   const handleFormSubmit = (event) => {
-    event.preventDefault(); 
+    event.prevenTableCellefault(); 
   }
 
-  const showMessage = (message) => {
-    
+  const showMessage = (message) => { 
   }
 
   return (
     <>
-      <div>
-        <form className='searchForm' onSubmit={handleFormSubmit}>
-          <select name="channel" id="channel_select">
-            <option></option>
-            {
-              channels.map((channel, idx) => (
-                <option key={idx} value={channel.id}>{channel.name}</option>
-              ))
-            }
-          </select>
-          <select name="trigger" id="trigger_select">
-            <option></option>
-            {
-              triggers.map((trigger, idx) => (
-                <option key={idx} value={trigger.id}>{trigger.name}</option>
-              ))
-            }
-          </select>
+      <ContentWrapper
+        header={{
+          bgColor:'transparent',
+          title: 'Mensagens',
+          leftIcon: ForumIcon
+        }}>
+        <div className='homePageContent'>
+          <form className='searchForm'>
+            <FormControl fullWidth variant="outlined">
+              <InputLabel htmlFor="channel_select">Canal</InputLabel>
+              <Select
+                label="Canal"
+                value={formChannel}
+                onChange={(e)=>setFormChannel(e.target.value)}
+                inputProps={{
+                  name: 'channel',
+                  id: 'channel_select',
+                }}
+              >
+                <MenuItem aria-label='None' value="" />
+                {
+                  channels.map((channel, idx) => (
+                    <MenuItem key={idx} value={channel.name}>
+                      {channel.name}
+                    </MenuItem>
+                  ))
+                }
+              </Select>
+            </FormControl>
+            <FormControl fullWidth variant="outlined">
+              <InputLabel htmlFor="trigger_select">Gatilho</InputLabel>
+              <Select
+                label="Gatilho"
+                value={formTrigger}
+                onChange={(e)=>setFormTrigger(e.target.value)}
+                inputProps={{
+                  name: 'trigger',
+                  id: 'trigger_select',
+                }}
+              >
+                <MenuItem aria-label='None' value="" />
+                {
+                  triggers.map((trigger, idx) => (
+                    <MenuItem key={idx} value={trigger.name}>
+                      {trigger.name}
+                    </MenuItem>
+                  ))
+                }
+              </Select>
+            </FormControl>
+            <FormControl fullWidth variant="outlined">
+            <InputLabel htmlFor="time_input">Timer</InputLabel>
+              <TextField 
+                variant='outlined'
+                id='timer_input'
+                name="timer"
+                value={formTimer}
+                onChange={(e)=>setFormTimer(e.target.value)}
+              />
+            </FormControl>
+            <Button type='submit' variant="contained" color='primary'>Filtrar</Button>
+          </form>
 
-          <input type="text" name="trigger" placeholder=''/>
-          <button type='submit'>Filtrar</button>
-        </form>
-
-        <div className='tableContainer'>
-          <table className='messagesTable'>
-            <thead>
-              <tr>
-                <th>Canal</th>
-                <th>Gatilho</th>
-                <th>Tempo</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                messages.map(
-                  (message, idx) => (
-                    <tr key={idx}>
-                      <td>{message.channel}</td>
-                      <td>{message.trigger}</td>
-                      <td>{message.timer}</td>
-                      <td>
-                        <button onClick={()=>{ showMessage(message)}}>Ver Mensagem</button>
-                      </td>
-                    </tr>
+          <TableContainer>
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Canal</TableCell>
+                  <TableCell>Gatilho</TableCell>
+                  <TableCell>Timer</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {
+                  messages.map(
+                    (message, idx) => (
+                      <TableRow key={idx}
+                        hover
+                        onClick={()=>{ showMessage(message)}}>
+                        <TableCell>{message.channel}</TableCell>
+                        <TableCell>{message.trigger}</TableCell>
+                        <TableCell>{message.timer}</TableCell>
+                      </TableRow>
+                    )
                   )
-                )
-              }
-            </tbody>
-          </table>
+                }
+              </TableBody>
+            </Table>
+          </TableContainer>
         </div>
-      </div>
-      <Modal 
-        body={modalBody}
-        showModal={showModal}
-
-      />
-      
+      </ContentWrapper>
     </>
   )
 }
 
 export default Home;
-
-const Modal = ({header, body, footer}) => {
-  return (
-    <div className='modalWrapper'>
-      <div className='modalContainer'>
-        <div className='modalBody'>
-        {createElement(body, {})}
-        </div>
-        <div className='modalFooter'>
-          {createElement(footer, {})}
-        </div>
-      </div>
-    </div>
-  )
-}

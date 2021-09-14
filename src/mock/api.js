@@ -4,8 +4,17 @@ const server = createServer({
   routes() {
     this.namespace = 'api';
 
-    this.get('/messages', (schema) => {
-      return schema.db.messages;
+    this.get('/messages', (schema, request) => {
+      let params = request.queryParams;
+      Object.keys(params).forEach(
+        key => {
+          if(!params[key]){
+            delete params[key];
+          }
+        }
+      )
+
+      return schema.db.messages.where(params);
     });
 
     this.get('/channels', (schema) => {

@@ -26,23 +26,22 @@ const GraphOne = () => {
   };
   const options = {
     indexAxis: 'y',
-  // Elements options apply to all of the options unless overridden in a dataset
-  // In this case, we are setting the border of each horizontal bar to be 2px wide
-  elements: {
-    bar: {
-      borderWidth: 2,
+    maintainAspectRatio: false,
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
     },
-  },
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'bottom',
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'bottom',
+      },
+      title: {
+        display: true,
+        text: 'Contas abertas - BOT',
+      },
     },
-    title: {
-      display: true,
-      text: 'Contas abertas - BOT',
-    },
-  },
   };
 
   return (
@@ -50,8 +49,7 @@ const GraphOne = () => {
       <div style={{backgroundColor: 'white', padding: '10px', borderRadius: '5px'}}>
         <Bar
           data={data}
-          width={100}
-          height={50}
+          height={300}
           options={options}
         />
       </div>
@@ -83,22 +81,21 @@ const GraphTwo = () => {
   };
   const options = {
     indexAxis: 'x',
-  // Elements options apply to all of the options unless overridden in a dataset
-  // In this case, we are setting the border of each horizontal bar to be 2px wide
-  elements: {
-    bar: {
-      borderWidth: 2,
+    maintainAspectRatio: false,
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
     },
-  },
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top',
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: false,
+      },
     },
-    title: {
-      display: false,
-    },
-  },
   };
 
   return (
@@ -106,8 +103,7 @@ const GraphTwo = () => {
       <div style={{backgroundColor: 'white', padding: '10px', borderRadius: '5px'}}>
         <Line
           data={data}
-          width={100}
-          height={50}
+          height={300}
           options={options}
         />
       </div>

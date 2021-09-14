@@ -1,3 +1,4 @@
+import { Box, Container } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import './index.css';
@@ -14,7 +15,7 @@ const Header = () => {
 
   return <>
     <div className='header'>
-      <div className="container">    
+      <Box className="container">
         <Link to='/'>
           <h1>NAV</h1>
         </Link>
@@ -31,7 +32,7 @@ const Header = () => {
             }
           </ul>
         </nav>
-      </div>
+      </Box>
     </div>
   </>  
 }
