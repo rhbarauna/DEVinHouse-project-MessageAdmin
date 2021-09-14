@@ -1,4 +1,4 @@
-import { Switch, Route } from "react-router"
+import { Switch, Route, Redirect } from "react-router"
 import {Dashboard as DashboardPage, Home as HomePage, Login as LoginPage} from '../pages';
 import {Header} from '../components';
 const ProtectedRoutes = () => {
@@ -17,7 +17,10 @@ const Routes = () => {
           <div className="container pageWrapper">
             <Switch>
               <Route path='/dashboard' component={DashboardPage}/>
-              <Route path='/' component={HomePage} />
+              <Route path='/messages' component={HomePage}/>
+              <Route exact path='/'>
+                <Redirect to="/messages" />
+              </Route>
             </Switch>
           </div>
         </Route>

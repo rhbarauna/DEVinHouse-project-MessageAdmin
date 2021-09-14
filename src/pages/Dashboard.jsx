@@ -115,7 +115,6 @@ const Dashboard = () => {
   
   return (
     <>
-      <h1>DASHBOARD</h1>
       <div style={{backgroundColor: 'white', padding: '10px', borderRadius: '5px'}}>
         <GraphOne />
         <hr />

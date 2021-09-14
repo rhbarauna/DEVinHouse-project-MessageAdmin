@@ -2,10 +2,11 @@ import './index.css';
 import { useEffect, useState } from "react";
 import ContentWrapper from '../components/ContentWrapper';
 import ForumIcon from '@material-ui/icons/Forum';
-import { Button, FormControl, InputLabel, MenuItem, Select,
+import { Button, FormControl, InputLabel, MenuItem, Modal, Select,
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField
 } from '@material-ui/core';
 import {useLocation} from 'react-router-dom';
+import { MessageForm } from '../../components';
 
 const Home = () => {
   const [channels, setChannels] = useState([]);
@@ -15,6 +16,8 @@ const Home = () => {
   const [formChannel, setFormChannel] = useState('');
   const [formTrigger, setFormTrigger] = useState('');
   const [formTimer, setFormTimer] = useState('');
+
+  const [modalOpen, setModalOpen] = useState(true);
 
   const location = useLocation();
   const queryParams = location.search;
@@ -166,6 +169,12 @@ const Home = () => {
           </TableContainer>
         </div>
       </ContentWrapper>
+      <Modal
+        open={modalOpen}
+        onClose={()=> setModalOpen(false)}
+      >
+        <MessageForm />
+      </Modal>
     </>
   )
 }
