@@ -1,7 +1,7 @@
 import { AppBar, Box, Toolbar, Typography } from "@material-ui/core"
 import {createElement} from 'react';
 
-const PageContentHeader = ({leftIcon, title, headerBgColor, ...props}) => {
+const PageContentHeader = ({leftIcon, title, headerBgColor, rightContent, ...props}) => {
   return (
     <Box>
       <AppBar
@@ -12,13 +12,18 @@ const PageContentHeader = ({leftIcon, title, headerBgColor, ...props}) => {
         style={{
           borderBottomRightRadius: 0,
           borderBottomLeftRadius: 0,
+          borderBottom: '1px solid #e1e1e1',
+          padding: '0 20px'
         }}
       >
         <Toolbar disableGutters> 
-          <div style={{width: 60, height:'100%', textAlign: 'center', padding:'2'}}>
-            {leftIcon && createElement(leftIcon, {})}
-          </div>
+          {leftIcon && createElement(leftIcon, {
+            style:{width: 25, height:'100%', marginRight:10}
+          })}
           <Typography variant="h5"> {title} </Typography>
+          <div style={{marginLeft: 'auto'}}>
+            {rightContent && createElement(rightContent, {})}
+          </div>
         </Toolbar>
       </AppBar>
     </Box>

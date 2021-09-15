@@ -1,8 +1,19 @@
 import { Button, FormControl, InputLabel,
+  makeStyles,
   MenuItem, Select, TextField} from '@material-ui/core';
 import { useEffect, useState } from 'react';
 
+const useStyles = makeStyles({
+  searchForm: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '20px',
+    marginBottom: '20px'
+  }
+})
+  
 const FilterForm = ({onSubmit}) => {
+  const classes = useStyles();
   const [formChannel, setFormChannel] = useState('');
   const [formTrigger, setFormTrigger] = useState('');
   const [formTimer, setFormTimer] = useState('');
@@ -36,7 +47,7 @@ const FilterForm = ({onSubmit}) => {
   }
 
   return (
-    <form className='searchForm' onSubmit={handleSubmit}>
+    <form className={classes.searchForm} onSubmit={handleSubmit}>
       <FormControl fullWidth variant="outlined">
         <InputLabel htmlFor="channel_select">Canal</InputLabel>
         <Select

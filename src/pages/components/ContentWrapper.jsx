@@ -12,6 +12,7 @@ const ContentWrapper = ({header, children, ...props}) => {
               headerBgColor={header && header.bgColor}
               leftIcon={header && header.leftIcon}
               title={header && header.title}
+              rightContent={header && header.rightContent}
             />
             <Box mt={2} paddingBottom={5}>
               { children }

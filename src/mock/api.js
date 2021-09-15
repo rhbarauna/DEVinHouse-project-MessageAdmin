@@ -17,6 +17,17 @@ const server = createServer({
       return schema.db.messages.where(params);
     });
 
+    this.post('/message', (schema, request) => {
+      console.log(request)
+      const resp = schema.db.messages.insert(request.requestBody);
+      console.log('resp', resp);
+      
+      const messages = schema.db.messages;
+      console.log('messages', messages)
+      
+      return messages
+    });
+
     this.get('/channels', (schema) => {
       return schema.db.channels;
     });

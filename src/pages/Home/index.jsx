@@ -2,24 +2,17 @@ import './index.css';
 import { useEffect, useState } from "react";
 import ContentWrapper from '../components/ContentWrapper';
 import ForumIcon from '@material-ui/icons/Forum';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, makeStyles, Dialog
+import AddCommentIcon from '@material-ui/icons/AddComment';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, makeStyles, Dialog, Button
 } from '@material-ui/core';
 
-import { FilterForm, MessageForm } from '../../components';
-
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-}));
+import { FilterForm, MessageDetails, MessageForm } from '../../components';
 
 const Home = () => {
-  const classes = useStyles();
   const [messages, setMessages] = useState([]);
   
   const [modalOpen, setModalOpen] = useState(false);
+  const [addMessageModalOpen, setAddMessageModalOpen] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState(null);
 
   const getMessages = async (filter='') => {
@@ -45,14 +38,31 @@ const Home = () => {
     setSelectedMessage(message)
   }
 
+  const NewMessageButton = () => {
+    return(
+      <Button
+        startIcon={<AddCommentIcon />}
+        variant='contained'
+        color='primary'
+        onClick={() => {
+          setAddMessageModalOpen(true);
+        }}
+      >
+        Adicionar
+      </Button>
+    )
+  }
+
   return (
     <>
       <ContentWrapper
         header={{
           bgColor:'transparent',
           title: 'Mensagens',
-          leftIcon: ForumIcon
-        }}>
+          leftIcon: ForumIcon,
+          rightContent: NewMessageButton
+        }}
+      >
         <div className='homePageContent'>
           <FilterForm onSubmit={handleFormSubmit}/>
 
@@ -84,15 +94,15 @@ const Home = () => {
           </TableContainer>
         </div>
       </ContentWrapper>
-      <Dialog
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-        open={modalOpen}
-        onClose={()=> setModalOpen(false)}
-        className={classes.modal}
-      >
-        <MessageForm message={selectedMessage}/> 
-      </Dialog>
+      
+      { modalOpen && <MessageDetails message={selectedMessage} onClose={()=>setModalOpen(false)}/>}
+      { addMessageModalOpen && <MessageForm onClose={
+        async () => {
+          const msgs = await getMessages()
+          setMessages(msgs);
+          setAddMessageModalOpen(false)
+        }
+      }/>}
     </>
   )
 }
