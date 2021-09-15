@@ -2,13 +2,22 @@ import './index.css';
 import { useEffect, useState } from "react";
 import ContentWrapper from '../components/ContentWrapper';
 import ForumIcon from '@material-ui/icons/Forum';
-import { Button, FormControl, InputLabel, MenuItem, Modal, Select,
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField
+import { Button, FormControl, InputLabel, MenuItem, Modal, Paper, Select,
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, makeStyles, Dialog
 } from '@material-ui/core';
-import {useLocation} from 'react-router-dom';
+
 import { MessageForm } from '../../components';
 
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+}));
+
 const Home = () => {
+  const classes = useStyles();
   const [channels, setChannels] = useState([]);
   const [triggers, setTriggers] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -16,11 +25,15 @@ const Home = () => {
   const [formChannel, setFormChannel] = useState('');
   const [formTrigger, setFormTrigger] = useState('');
   const [formTimer, setFormTimer] = useState('');
+  
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedMessage, setSelectedMessage] = useState(null);
 
-  const [modalOpen, setModalOpen] = useState(true);
-
-  const location = useLocation();
-  const queryParams = location.search;
+  const getMessages = async (filter='') => {
+    let url = `api/messages${filter}`;
+    const response = await fetch(url);
+    return await response.json();
+  }
 
   useEffect(() => {
     ( async () => {
@@ -40,40 +53,20 @@ const Home = () => {
 
   useEffect(()=>{
     ( async () => {
-      let url = 'api/messages';
-      if(queryParams) {
-        url+=queryParams;
-      }
-      const response = await fetch(url);
-      const msgs = await response.json();
+      const msgs = await getMessages()
       setMessages(msgs);
     })();
-  }, [queryParams]);
-  
-  useEffect(()=>{
-    const searchParams = new URLSearchParams(queryParams);
-    const channel = searchParams.get('channel')
-    if(channel) {
-      setFormChannel(channel)
-    }
+  }, []);
 
-    const trigger = searchParams.get('trigger')
-    if(trigger) {
-      setFormTrigger(trigger)
-    }
-
-    const timer = searchParams.get('timer')
-    if(timer) {
-      setFormTimer(timer)
-    }
-
-  }, [queryParams])
-
-  const handleFormSubmit = (event) => {
-    event.prevenTableCellefault(); 
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const msgs = await getMessages(`?channel=${formChannel}&trigger=${formTrigger}&timer=${formTimer}`);
+    setMessages(msgs);
   }
 
   const showMessage = (message) => { 
+    setModalOpen(true)
+    setSelectedMessage(message)
   }
 
   return (
@@ -85,7 +78,7 @@ const Home = () => {
           leftIcon: ForumIcon
         }}>
         <div className='homePageContent'>
-          <form className='searchForm'>
+          <form className='searchForm' onSubmit={handleFormSubmit}>
             <FormControl fullWidth variant="outlined">
               <InputLabel htmlFor="channel_select">Canal</InputLabel>
               <Select
@@ -97,7 +90,7 @@ const Home = () => {
                   id: 'channel_select',
                 }}
               >
-                <MenuItem aria-label='None' value="" />
+                <MenuItem aria-label='None' value=" " />
                 {
                   channels.map((channel, idx) => (
                     <MenuItem key={idx} value={channel.name}>
@@ -129,11 +122,11 @@ const Home = () => {
               </Select>
             </FormControl>
             <FormControl fullWidth variant="outlined">
-            <InputLabel htmlFor="time_input">Timer</InputLabel>
               <TextField 
                 variant='outlined'
                 id='timer_input'
                 name="timer"
+                label="Timer"
                 value={formTimer}
                 onChange={(e)=>setFormTimer(e.target.value)}
               />
@@ -169,12 +162,15 @@ const Home = () => {
           </TableContainer>
         </div>
       </ContentWrapper>
-      <Modal
+      <Dialog
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
         open={modalOpen}
         onClose={()=> setModalOpen(false)}
+        className={classes.modal}
       >
-        <MessageForm />
-      </Modal>
+        <MessageForm message={selectedMessage}/> 
+      </Dialog>
     </>
   )
 }
