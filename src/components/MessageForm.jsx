@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { TextField, Button, FormControl, InputLabel,
   MenuItem, Select, DialogActions, makeStyles} from '@material-ui/core';
 import { Modal } from '.';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles({
   addForm: {
@@ -15,6 +16,8 @@ const useStyles = makeStyles({
 
 const MessageForm = ({ onClose }) => {
   const classes = useStyles();
+  const {enqueueSnackbar} = useSnackbar();
+
   const [formChannel, setFormChannel] = useState('');
   const [formTrigger, setFormTrigger] = useState('');
   const [formTimer, setFormTimer] = useState('');
@@ -51,9 +54,12 @@ const MessageForm = ({ onClose }) => {
           message: formMessage
         }
       })
+
+      enqueueSnackbar('Mensagem registrada com sucesso', {variant: 'success'});
       onClose();
     }catch(e){
-
+      console.error(e);
+      enqueueSnackbar(`Falha ao registrar nova mensagem. <br> ${e.message}`, {variant: 'error'});
     }
   }
 

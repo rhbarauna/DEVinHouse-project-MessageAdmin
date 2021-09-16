@@ -1,14 +1,9 @@
 import { Switch, Route, Redirect } from "react-router"
 import {Dashboard as DashboardPage, Home as HomePage, Login as LoginPage} from '../pages';
 import {Header} from '../components';
-import { Snackbar } from "@material-ui/core";
-import { useState } from "react";
 
 const ProtectedRoutes = () => {
-const [openSnackbar, setOpenSnackbar] = useState(false);
-const [snackbarContent, setSnackbarContent] = useState('');
-const handleCloseSnackbar = () => {}
-  
+
   return (
     <>
      <Header />
@@ -20,13 +15,6 @@ const handleCloseSnackbar = () => {}
             <Redirect to="/messages" />
           </Route>
         </Switch>
-        <Snackbar
-          anchorOrigin={{ vertical:'top', horizontal:'top' }}
-          open={openSnackbar}
-          onClose={handleCloseSnackbar}
-          message={snackbarContent}
-          key={Math.random()}
-        />
       </div>
     </>
   )
