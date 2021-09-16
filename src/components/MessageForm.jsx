@@ -9,11 +9,11 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     gap: '20px',
     justifyContent: 'space-between',
-    width: '400px'
+    width: '500px'
   }
 })
 
-const MessageForm = ({onClose}) => {
+const MessageForm = ({ onClose }) => {
   const classes = useStyles();
   const [formChannel, setFormChannel] = useState('');
   const [formTrigger, setFormTrigger] = useState('');
