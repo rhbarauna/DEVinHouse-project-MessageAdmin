@@ -10,7 +10,6 @@ import { FilterForm, MessageDetails, MessageForm } from '../../components';
 
 const Home = () => {
   const [messages, setMessages] = useState([]);
-  
   const [modalOpen, setModalOpen] = useState(false);
   const [addMessageModalOpen, setAddMessageModalOpen] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState(null);

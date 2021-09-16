@@ -3,10 +3,11 @@ import {Dashboard as DashboardPage, Home as HomePage, Login as LoginPage} from '
 import {Header} from '../components';
 import { Snackbar } from "@material-ui/core";
 import { useState } from "react";
+
 const ProtectedRoutes = () => {
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [snackbarContent, setSnackbarContent] = useState('');
-  const handleCloseSnackbar = () => {}
+const [openSnackbar, setOpenSnackbar] = useState(false);
+const [snackbarContent, setSnackbarContent] = useState('');
+const handleCloseSnackbar = () => {}
   
   return (
     <>
