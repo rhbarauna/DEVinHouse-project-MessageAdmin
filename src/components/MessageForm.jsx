@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   }
 })
 
-const MessageForm = ({ onClose }) => {
+const MessageForm = ({ onAddMessage, onClose }) => {
   const classes = useStyles();
   const {enqueueSnackbar} = useSnackbar();
 
@@ -56,7 +56,7 @@ const MessageForm = ({ onClose }) => {
       })
 
       enqueueSnackbar('Mensagem registrada com sucesso', {variant: 'success'});
-      onClose();
+      onAddMessage();
     }catch(e){
       console.error(e);
       enqueueSnackbar(`Falha ao registrar nova mensagem. <br> ${e.message}`, {variant: 'error'});
@@ -72,6 +72,7 @@ const MessageForm = ({ onClose }) => {
           <FormControl fullWidth variant="outlined">
             <InputLabel htmlFor="channel_select">Canal</InputLabel>
             <Select
+              required
               label="Canal"
               value={formChannel}
               onChange={(e)=>setFormChannel(e.target.value)}
@@ -93,6 +94,7 @@ const MessageForm = ({ onClose }) => {
           <FormControl fullWidth variant="outlined">
             <InputLabel htmlFor="trigger_select">Gatilho</InputLabel>
             <Select
+              required
               label="Gatilho"
               value={formTrigger}
               onChange={(e)=>setFormTrigger(e.target.value)}
@@ -113,6 +115,7 @@ const MessageForm = ({ onClose }) => {
           </FormControl>
           <FormControl fullWidth variant="outlined">
             <TextField 
+              required
               variant='outlined'
               id='timer_input'
               name="timer"
@@ -124,6 +127,7 @@ const MessageForm = ({ onClose }) => {
 
           <FormControl fullWidth variant="outlined">
             <TextField 
+              required
               multiline
               variant='outlined'
               id='message_input'

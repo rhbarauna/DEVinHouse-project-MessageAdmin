@@ -105,13 +105,16 @@ const Home = () => {
       </ContentWrapper>
       
       { modalOpen && <MessageDetails message={selectedMessage} onClose={()=>setModalOpen(false)}/>}
-      { addMessageModalOpen && <MessageForm onClose={
-        async () => {
-          setAddMessageModalOpen(false)
-          const msgs = await getMessages()
-          updateMessages(msgs);
+      { addMessageModalOpen && <MessageForm
+        onClose={()=>setAddMessageModalOpen(false)}
+        onAddMessage={
+          async () => {
+            setAddMessageModalOpen(false)
+            const msgs = await getMessages()
+            updateMessages(msgs);
+          }
         }
-      }/>}
+      />}
     </>
   )
 }
