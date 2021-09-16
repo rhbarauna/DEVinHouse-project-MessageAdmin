@@ -1,14 +1,25 @@
-import './index.css';
 import { useEffect, useState } from "react";
 import ContentWrapper from '../components/ContentWrapper';
 import ForumIcon from '@material-ui/icons/Forum';
 import AddCommentIcon from '@material-ui/icons/AddComment';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, LinearProgress
 } from '@material-ui/core';
-
 import { FilterForm, MessageDetails, MessageForm } from '../../components';
+import {makeStyles} from '@material-ui/core';
+
+const useStyles = makeStyles(
+  (theme) => ({
+    content: {
+      padding:'0 20px'
+    },
+    tr:{
+      cursor: 'pointer'
+    }
+  })
+)
 
 const Home = () => {
+  const classes = useStyles();
   const [messages, setMessages] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [addMessageModalOpen, setAddMessageModalOpen] = useState(false);
@@ -69,7 +80,7 @@ const Home = () => {
           rightContent: NewMessageButton
         }}
       >
-        <div className='homePageContent'>
+        <div className={classes.content}>
           <FilterForm onSubmit={handleFormSubmit}/>
 
           {loading && <LinearProgress />}
@@ -77,7 +88,7 @@ const Home = () => {
             <TableContainer>
               <Table aria-label="simple table">
                 <TableHead>
-                  <TableRow>
+                  <TableRow variant='head'>
                     <TableCell>Canal</TableCell>
                     <TableCell>Gatilho</TableCell>
                     <TableCell>Timer</TableCell>
@@ -89,6 +100,7 @@ const Home = () => {
                       (message, idx) => (
                         <TableRow key={idx}
                           hover
+                          classes={classes.tr}
                           onClick={()=>{ showMessage(message)}}>
                           <TableCell>{message.channel}</TableCell>
                           <TableCell>{message.trigger}</TableCell>
