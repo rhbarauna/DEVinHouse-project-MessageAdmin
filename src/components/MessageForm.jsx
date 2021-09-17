@@ -3,6 +3,7 @@ import { TextField, Button, FormControl, InputLabel,
   MenuItem, Select, DialogActions, makeStyles} from '@material-ui/core';
 import { Modal } from '.';
 import { useSnackbar } from 'notistack';
+import * as yup from 'yup';
 
 const useStyles = makeStyles({
   addForm: {
@@ -13,6 +14,19 @@ const useStyles = makeStyles({
     width: '500px'
   }
 })
+
+const messageSchema = yup.object().shape({
+  channel: yup.string().required('Escolha o canal da mensagem'),
+  trigger: yup.string().required('Escolha o gatilho da mensagem'),
+  timer: yup.string()
+    .required('Informe o horario da mensagem')
+    .matches(/^[0-9]+:[0-5][0-9]$/, "Pecisa estar no formato H(H...):MM"),
+  message: yup.string().required('Informe a mensagem'),
+});
+
+const validate = async (data) => {
+  await messageSchema.validate(data);
+}
 
 const MessageForm = ({ onAddMessage, onClose }) => {
   const classes = useStyles();
@@ -40,19 +54,23 @@ const MessageForm = ({ onAddMessage, onClose }) => {
       const trgs = await response.json();
       setTriggers(trgs);
     })();
-  }, []);
+  }, []); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
+      const formData = {
+        channel: formChannel,
+        trigger: formTrigger,
+        timer: formTimer,
+        message: formMessage
+      }
+
+      await validate(formData);
+    
       await fetch('api/message', {
         method: 'POST',
-        body:{
-          channel: formChannel,
-          trigger: formTrigger,
-          timer: formTimer,
-          message: formMessage
-        }
+        body: formData
       })
 
       enqueueSnackbar('Mensagem registrada com sucesso', {variant: 'success'});
