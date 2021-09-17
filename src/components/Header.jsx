@@ -54,7 +54,7 @@ const Header = ({theme}) => {
             {
               routes.map(
                 (route, idx) => (
-                  <li className={classes.li} key={idx} onClick={()=>navigate(route.path)}>
+                  <li className={classes.li} key={idx} onClick={()=>{navigate(route.path)}}>
                     {route.label}
                   </li>
                 )

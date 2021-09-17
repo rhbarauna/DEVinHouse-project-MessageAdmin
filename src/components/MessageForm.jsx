@@ -24,9 +24,6 @@ const messageSchema = yup.object().shape({
   message: yup.string().required('Informe a mensagem'),
 });
 
-const validate = async (data) => {
-  await messageSchema.validate(data);
-}
 
 const MessageForm = ({ onAddMessage, onClose }) => {
   const classes = useStyles();
@@ -36,6 +33,11 @@ const MessageForm = ({ onAddMessage, onClose }) => {
   const [formTrigger, setFormTrigger] = useState('');
   const [formTimer, setFormTimer] = useState('');
   const [formMessage, setFormMessage] = useState('');
+
+  const [channelError, setChannelError] = useState(false);
+  const [triggerError, setTriggerError] = useState(false);
+  const [timerError, setTimerError] = useState(false);
+  const [messageError, setMessageError] = useState(false);
 
   const [channels, setChannels] = useState([]);
   const [triggers, setTriggers] = useState([]);
@@ -66,7 +68,9 @@ const MessageForm = ({ onAddMessage, onClose }) => {
         message: formMessage
       }
 
-      await validate(formData);
+      await messageSchema.validate(formData, {
+        abortEarly: false
+      });
     
       await fetch('api/message', {
         method: 'POST',
@@ -76,8 +80,23 @@ const MessageForm = ({ onAddMessage, onClose }) => {
       enqueueSnackbar('Mensagem registrada com sucesso', {variant: 'success'});
       onAddMessage();
     }catch(e){
-      console.error(e);
-      enqueueSnackbar(`Falha ao registrar nova mensagem. <br> ${e.message}`, {variant: 'error'});
+      console.dir(e);
+      if(e.name === 'ValidationError'){
+        e.inner.forEach(error => {
+          switch(error.path){
+            case 'channel':
+              return setChannelError(true);
+            case 'trigger':
+              return setTriggerError(true);
+            case 'timer':
+              return setTimerError(true);
+            case 'message':
+            default:
+              return setMessageError(true);
+          }
+        });
+      }
+      enqueueSnackbar(e.message, {variant: 'error'});
     }
   }
 
@@ -90,10 +109,13 @@ const MessageForm = ({ onAddMessage, onClose }) => {
           <FormControl fullWidth variant="outlined">
             <InputLabel htmlFor="channel_select">Canal</InputLabel>
             <Select
-              required
+              error={channelError}
               label="Canal"
               value={formChannel}
-              onChange={(e)=>setFormChannel(e.target.value)}
+              onChange={(e)=> {
+                setChannelError(false);
+                setFormChannel(e.target.value)
+              }}
               inputProps={{
                 name: 'channel',
                 id: 'channel_select',
@@ -112,10 +134,15 @@ const MessageForm = ({ onAddMessage, onClose }) => {
           <FormControl fullWidth variant="outlined">
             <InputLabel htmlFor="trigger_select">Gatilho</InputLabel>
             <Select
-              required
+              error={triggerError}
               label="Gatilho"
               value={formTrigger}
-              onChange={(e)=>setFormTrigger(e.target.value)}
+              onChange={(e)=>
+                {
+                  setTriggerError(false);
+                  setFormTrigger(e.target.value)
+                }
+              }
               inputProps={{
                 name: 'trigger',
                 id: 'trigger_select',
@@ -133,27 +160,33 @@ const MessageForm = ({ onAddMessage, onClose }) => {
           </FormControl>
           <FormControl fullWidth variant="outlined">
             <TextField 
-              required
+              error={timerError}
               variant='outlined'
               id='timer_input'
               name="timer"
               label="Timer"
               value={formTimer}
-              onChange={(e)=>setFormTimer(e.target.value)}
+              onChange={(e)=> {
+                setFormTimer(e.target.value)
+                setTimerError(false);
+              }}
             />
           </FormControl>
 
           <FormControl fullWidth variant="outlined">
             <TextField 
-              required
               multiline
+              error={messageError}
               variant='outlined'
               id='message_input'
               name="message"
               label="Mensagem"
               rows={5}
               value={formMessage}
-              onChange={(e)=>setFormMessage(e.target.value)}
+              onChange={(e)=>{
+                setMessageError(false);
+                setFormMessage(e.target.value);
+              }}
             />
           </FormControl>
           <DialogActions>

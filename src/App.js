@@ -8,7 +8,6 @@ import { store } from './stores';
 import SnackbarProvider from './components/SnackbarProvider';
 
 const useStyles = makeStyles((theme) => {
-  console.log(theme.palette);
   return {
     App:{
       height: '100vh',
