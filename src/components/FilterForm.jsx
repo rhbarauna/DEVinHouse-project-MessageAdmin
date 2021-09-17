@@ -91,7 +91,7 @@ const FilterForm = ({onSubmit}) => {
         </Select>
       </FormControl>
       <FormControl fullWidth variant="outlined">
-        <TextField 
+        <TextField
           variant='outlined'
           id='timer_input'
           name="timer"
@@ -100,7 +100,7 @@ const FilterForm = ({onSubmit}) => {
           onChange={(e)=>setFormTimer(e.target.value)}
         />
       </FormControl>
-      <Button type='submit' variant="contained" color='primary'>Filtrar</Button>
+      <Button type='submit' variant="contained" color='secondary'>Filtrar</Button>
     </form>
   )
 }
