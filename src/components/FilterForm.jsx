@@ -1,7 +1,8 @@
 import { Button, FormControl, InputLabel,
   makeStyles,
   MenuItem, Select, TextField} from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
   searchForm: {
@@ -13,29 +14,12 @@ const useStyles = makeStyles({
 })
   
 const FilterForm = ({onSubmit}) => {
+  const {channels, triggers} = useSelector((store) => store);
+  
   const classes = useStyles();
   const [formChannel, setFormChannel] = useState('');
   const [formTrigger, setFormTrigger] = useState('');
   const [formTimer, setFormTimer] = useState('');
-
-  const [channels, setChannels] = useState([]);
-  const [triggers, setTriggers] = useState([]);
-
-  useEffect(() => {
-    ( async () => {
-      const response = await fetch('api/channels');
-      const chs = await response.json();
-      setChannels(chs);
-    })();
-  }, []);
-
-  useEffect(()=>{
-    ( async () => {
-      const response = await fetch('api/triggers');
-      const trgs = await response.json();
-      setTriggers(trgs);
-    })();
-  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault()

@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { TextField, Button, FormControl, InputLabel,
   MenuItem, Select, DialogActions, makeStyles} from '@material-ui/core';
 import { Modal } from '.';
 import { useSnackbar } from 'notistack';
 import * as yup from 'yup';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
   addForm: {
@@ -28,6 +29,7 @@ const messageSchema = yup.object().shape({
 const MessageForm = ({ onAddMessage, onClose }) => {
   const classes = useStyles();
   const {enqueueSnackbar} = useSnackbar();
+  const {channels, triggers} = useSelector((store) => store);
 
   const [formChannel, setFormChannel] = useState('');
   const [formTrigger, setFormTrigger] = useState('');
@@ -38,25 +40,6 @@ const MessageForm = ({ onAddMessage, onClose }) => {
   const [triggerError, setTriggerError] = useState(false);
   const [timerError, setTimerError] = useState(false);
   const [messageError, setMessageError] = useState(false);
-
-  const [channels, setChannels] = useState([]);
-  const [triggers, setTriggers] = useState([]);
-
-  useEffect(() => {
-    ( async () => {
-      const response = await fetch('api/channels');
-      const chs = await response.json();
-      setChannels(chs);
-    })();
-  }, []);
-
-  useEffect(()=>{
-    ( async () => {
-      const response = await fetch('api/triggers');
-      const trgs = await response.json();
-      setTriggers(trgs);
-    })();
-  }, []); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();

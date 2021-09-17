@@ -3,8 +3,8 @@ import { reducer as channelReducer} from './channel/reducers';
 import { reducer as triggerReducer} from './channel/reducers';
 
 const appReducers = combineReducers({
-  channel: channelReducer,
-  trigger: triggerReducer
+  channels: channelReducer,
+  triggers: triggerReducer
 });
 
 const store = createStore(appReducers);

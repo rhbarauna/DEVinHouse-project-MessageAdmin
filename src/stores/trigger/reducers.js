@@ -1,24 +1,23 @@
 import {TRIGGER_ACTIONS_TYPE} from './actions';
 
-const INITIAL_STATE = {}
+const INITIAL_STATE = []
 
 const reducer = (state = INITIAL_STATE, action) => {
   const { type, payload } = action;
-  const {ADD, DEL} = TRIGGER_ACTIONS_TYPE;
+  const {ADD, DEL, SET} = TRIGGER_ACTIONS_TYPE;
 
   switch(type) {
     case ADD:{
-      return {
+      return [
         ...state,
         payload
-      }
+      ]
     }
     case DEL: {
-      const filtered = state.filter(trigger => trigger.id !== payload.id)
-      
-      return {
-        ...filtered
-      }
+      return state.filter(trigger => trigger.id !== payload.id)
+    }
+    case SET: {
+      return payload
     }
     default: {
       return state;

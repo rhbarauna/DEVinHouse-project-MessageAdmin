@@ -1,8 +1,29 @@
 import { Switch, Route, Redirect } from "react-router"
 import {Dashboard as DashboardPage, Home as HomePage, Login as LoginPage} from '../pages';
 import {Header} from '../components';
+import { useEffect } from "react";
+import {useDispatch} from 'react-redux';
+import { SET_CHANNELS } from "../stores/channel/actions";
+import { SET_TRIGGERS } from "../stores/trigger/actions";
 
 const ProtectedRoutes = () => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    ( async () => {
+      const response = await fetch('api/channels');
+      const chs = await response.json();
+      dispatch(SET_CHANNELS(chs));
+    })();
+  }, []);
+
+  useEffect(()=>{
+    ( async () => {
+      const response = await fetch('api/triggers');
+      const trgs = await response.json();
+      dispatch(SET_TRIGGERS(trgs));
+    })();
+  }, []);
 
   return (
     <>
