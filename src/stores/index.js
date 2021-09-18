@@ -8,5 +8,4 @@ const appReducers = combineReducers({
 });
 
 const store = createStore(appReducers);
-store.subscribe(()=> console.log(store.getState()));
 export { store }

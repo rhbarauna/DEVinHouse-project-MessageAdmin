@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { TextField, Button, FormControl, InputLabel,
-  MenuItem, Select, DialogActions, makeStyles, FormHelperText} from '@material-ui/core';
-import { Modal } from '.';
+import { Button, DialogActions, makeStyles }from '@material-ui/core';
+import { FormInputText, FormSelect, Modal } from '.';
 import { useSnackbar } from 'notistack';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
@@ -12,9 +11,6 @@ const useStyles = makeStyles(
     form:{
       maxWidth: '500px'
     },
-    formControl: {
-      marginBottom: '10px'
-    }
   })
 )
 
@@ -99,101 +95,57 @@ const MessageForm = ({ onAddMessage, onClose }) => {
       title='Nova Mensagem'
     >
         <form className={classes.form} onSubmit={handleSubmit}>
-          <FormControl fullWidth variant="outlined"
-            error={channelError}
-            className={classes.formControl}
-          >
-            <InputLabel htmlFor="channel_select">Canal</InputLabel>
-            <Select
-              label="Canal"
-              value={formChannel}
-              onChange={(e)=> {
-                setChannelError(false);
-                setFormChannel(e.target.value)
-              }}
-              inputProps={{
-                name: 'channel',
-                id: 'channel_select',
-              }}
-            >
-              <MenuItem aria-label='None' value="" />
-              {
-                channels.map((channel, idx) => (
-                  <MenuItem key={idx} value={channel.name}>
-                    {channel.name}
-                  </MenuItem>
-                ))
-              }
-            </Select>
-            <FormHelperText>{channelError}</FormHelperText>
-          </FormControl>
-          <FormControl fullWidth variant="outlined"
-            error={triggerError}
-            className={classes.formControl}
-          >
-            <InputLabel htmlFor="trigger_select">Gatilho</InputLabel>
-            <Select
-              label="Gatilho"
-              value={formTrigger}
-              onChange={(e)=>
-                {
-                  setTriggerError(false);
-                  setFormTrigger(e.target.value)
-                }
-              }
-              inputProps={{
-                name: 'trigger',
-                id: 'trigger_select',
-              }}
-            >
-              <MenuItem aria-label='None' value="" />
-              {
-                triggers.map((trigger, idx) => (
-                  <MenuItem key={idx} value={trigger.name}>
-                    {trigger.name}
-                  </MenuItem>
-                ))
-              }
-            </Select>
-            <FormHelperText>{triggerError}</FormHelperText>
-          </FormControl>
-          <FormControl fullWidth variant="outlined"
-            className={classes.formControl}
-          >
-            <TextField 
-              error={timerError}
-              helperText={timerError}
-              variant='outlined'
-              id='timer_input'
-              name="timer"
-              label="Timer"
-              value={formTimer}
-              onChange={(e)=> {
-                setFormTimer(e.target.value)
-                setTimerError(false);
-              }}
-            />
-          </FormControl>
-
-          <FormControl fullWidth variant="outlined"
-            className={classes.formControl}
-          >
-            <TextField 
-              multiline
-              error={messageError}
-              helperText={messageError}
-              variant='outlined'
-              id='message_input'
-              name="message"
-              label="Mensagem"
-              rows={5}
-              value={formMessage}
-              onChange={(e)=>{
-                setMessageError(false);
-                setFormMessage(e.target.value);
-              }}
-            />
-          </FormControl>
+          <FormSelect
+            id='channel_select'
+            name='channel'
+            label='Canal'
+            value={formChannel}
+            errorMessage={channelError}
+            onChange={(e)=> {
+              setChannelError(false);
+              setFormChannel(e.target.value)
+            }} 
+            options={channels}
+          />
+          <FormSelect
+            id='trigger_select'
+            name='trigger'
+            label="Gatilho"
+            value={formTrigger}
+            errorMessage={triggerError}
+            onChange={(e)=>{
+                setTriggerError(false);
+                setFormTrigger(e.target.value)
+            }}
+            options={triggers}
+          />
+          <FormInputText
+            id='timer_input'
+            name="timer"
+            label="Timer"
+            value={formTimer}
+            onChange={(e)=> {
+              setFormTimer(e.target.value)
+              setTimerError(false);
+            }}
+            errorMessage={timerError}
+            helperText={timerError}
+          />
+          <FormInputText
+            id='message_input'
+            name="message"
+            label="Mensagem"
+            value={formMessage}
+            onChange={(e)=>{
+              setMessageError(false);
+              setFormMessage(e.target.value);
+            }}
+            errorMessage={messageError}
+            helperText={messageError}  
+            multiline
+            rows={5}    
+          />
+          
           <DialogActions>
             <Button type='submit' variant="contained" color='primary'>Cadastrar</Button>
           </DialogActions>
