@@ -2,21 +2,20 @@ import { useEffect, useState } from "react";
 import ContentWrapper from './components/ContentWrapper';
 import ForumIcon from '@material-ui/icons/Forum';
 import AddCommentIcon from '@material-ui/icons/AddComment';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, LinearProgress
-} from '@material-ui/core';
-import { FilterForm, MessageDetails, MessageForm } from '../components';
+import { Button, LinearProgress } from '@material-ui/core';
+import { FilterForm, MessageDetails, MessageForm, MessageTable } from '../components';
 import {makeStyles} from '@material-ui/core';
 import {getMessages as getApiMessages} from '../services/api';
 
 const useStyles = makeStyles(
-  (theme) => ({
-    content: {
-      padding:'0 20px'
-    },
-    tr:{
-      cursor: 'pointer'
+  (theme) => {
+    return {
+      content: {
+        paddingLeft:theme.spacing(3),
+        paddingRight:theme.spacing(3)
+      },
     }
-  })
+  }
 )
 
 const Home = () => {
@@ -82,34 +81,11 @@ const Home = () => {
       >
         <div className={classes.content}>
           <FilterForm onSubmit={handleFormSubmit}/>
-            <TableContainer>
-              <Table aria-label="simple table">
-                <TableHead>
-                  <TableRow variant='head'>
-                    <TableCell>Canal</TableCell>
-                    <TableCell>Gatilho</TableCell>
-                    <TableCell>Timer</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                {loading && <TableRow><TableCell colSpan={3}><LinearProgress /></TableCell></TableRow>}
-                {!loading && 
-                  messages.map(
-                    (message, idx) => (
-                      <TableRow key={idx}
-                        hover
-                        className={classes.tr}
-                        onClick={()=>{ showMessage(message)}}>
-                        <TableCell>{message.channel}</TableCell>
-                        <TableCell>{message.trigger}</TableCell>
-                        <TableCell>{message.timer}</TableCell>
-                      </TableRow>
-                    )
-                  )
-                }
-                </TableBody>
-              </Table>
-            </TableContainer>
+          <MessageTable
+            data={messages}
+            onRowClick={(message)=>{showMessage(message)}} 
+          />
+          {loading && <LinearProgress />}
         </div>
       </ContentWrapper>
       

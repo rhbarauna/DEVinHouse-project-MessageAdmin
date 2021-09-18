@@ -3,6 +3,7 @@ import Header from './Header';
 import PageContentHeader from './PageContentHeader';
 import MessageForm from './MessageForm';
 import MessageDetails from './MessageDetails';
+import MessageTable from './MessageTable';
 import Modal from './Modal';
 
 export {
@@ -10,6 +11,7 @@ export {
   Header,
   MessageDetails,
   MessageForm,
+  MessageTable,
   Modal,
   PageContentHeader
 }

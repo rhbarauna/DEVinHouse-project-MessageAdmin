@@ -1,27 +1,19 @@
-import { Dialog, DialogContent, DialogTitle, makeStyles} from "@material-ui/core";
-
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-}));
+import { Dialog, DialogContent, DialogTitle} from "@material-ui/core";
 
 const Modal = ({onClose, children, title}) => {
-  const classes=useStyles();
-  return <>
-    <Dialog
-      open={true}
-      onClose={onClose}
-      className={classes.modal}
-    > 
-      {title && <DialogTitle>{title}</DialogTitle>}
-      <DialogContent>
-        {children}
-      </DialogContent>
-    </Dialog>
-  </>
+  return (
+    <>
+      <Dialog
+        open={true}
+        onClose={onClose}
+      > 
+        {title && <DialogTitle>{title}</DialogTitle>}
+        <DialogContent>
+          {children}
+        </DialogContent>
+      </Dialog>
+    </>
+  )
 }
 
 export default Modal;

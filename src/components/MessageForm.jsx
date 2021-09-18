@@ -7,15 +7,16 @@ import * as yup from 'yup';
 import { useSelector } from 'react-redux';
 import { saveMessage } from '../services/api';
 
-const useStyles = makeStyles({
-  addForm: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px',
-    justifyContent: 'space-between',
-    width: '500px'
-  }
-})
+const useStyles = makeStyles(
+  (theme) => ({
+    form:{
+      maxWidth: '500px'
+    },
+    formControl: {
+      marginBottom: '10px'
+    }
+  })
+)
 
 const messageSchema = yup.object().shape({
   channel: yup.string().required('Escolha o canal da mensagem'),
@@ -97,9 +98,10 @@ const MessageForm = ({ onAddMessage, onClose }) => {
       onClose={onClose}
       title='Nova Mensagem'
     >
-        <form className={classes.addForm} onSubmit={handleSubmit}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <FormControl fullWidth variant="outlined"
             error={channelError}
+            className={classes.formControl}
           >
             <InputLabel htmlFor="channel_select">Canal</InputLabel>
             <Select
@@ -127,6 +129,7 @@ const MessageForm = ({ onAddMessage, onClose }) => {
           </FormControl>
           <FormControl fullWidth variant="outlined"
             error={triggerError}
+            className={classes.formControl}
           >
             <InputLabel htmlFor="trigger_select">Gatilho</InputLabel>
             <Select
@@ -154,7 +157,9 @@ const MessageForm = ({ onAddMessage, onClose }) => {
             </Select>
             <FormHelperText>{triggerError}</FormHelperText>
           </FormControl>
-          <FormControl fullWidth variant="outlined">
+          <FormControl fullWidth variant="outlined"
+            className={classes.formControl}
+          >
             <TextField 
               error={timerError}
               helperText={timerError}
@@ -170,7 +175,9 @@ const MessageForm = ({ onAddMessage, onClose }) => {
             />
           </FormControl>
 
-          <FormControl fullWidth variant="outlined">
+          <FormControl fullWidth variant="outlined"
+            className={classes.formControl}
+          >
             <TextField 
               multiline
               error={messageError}
