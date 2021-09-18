@@ -1,22 +1,21 @@
-
 const TRIGGER_ACTIONS_TYPE = {
-  ADD: 'ADD_TRIGGER',
-  DEL: 'REMOVE_TRIGGER',
-  SET: 'SET_TRIGGERS',
+  ADD_TRIGGER: 'ADD_TRIGGER',
+  DEL_TRIGGER: 'REMOVE_TRIGGER',
+  SET_TRIGGERS: 'SET_TRIGGERS',
 }
 
 const ADD_TRIGGER = (payload) => ({
- type: TRIGGER_ACTIONS_TYPE.ADD,
+ type: TRIGGER_ACTIONS_TYPE.ADD_TRIGGER,
  payload
 })
 
 const DELETE_TRIGGER = (payload) => ({
-  type: TRIGGER_ACTIONS_TYPE.DEL,
+  type: TRIGGER_ACTIONS_TYPE.DEL_TRIGGER,
   payload
  })
 
  const SET_TRIGGERS = (payload) => ({
-  type: TRIGGER_ACTIONS_TYPE.SET,
+  type: TRIGGER_ACTIONS_TYPE.SET_TRIGGERS,
   payload
  })
 

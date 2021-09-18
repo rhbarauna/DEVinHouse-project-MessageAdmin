@@ -4,22 +4,21 @@ const INITIAL_STATE = []
 
 const reducer = (state = INITIAL_STATE, action) => {
   const {type, payload} = action;
-  const {ADD, DEL, SET} = CHANNEL_ACTIONS_TYPE;
+  const {ADD_CHANNEL, DEL_CHANNEL, SET_CHANNEL} = CHANNEL_ACTIONS_TYPE;
 
   switch(type) {
-    case SET: {
-      return payload
-    }
-    case ADD: {
+    case ADD_CHANNEL: {
       return [
         ...state,
         payload
       ]
     }
-    case DEL: {
+    case DEL_CHANNEL: {
       return state.filter(channel => channel.id !== payload.id)
     }
-
+    case SET_CHANNEL: {
+      return payload
+    }
     default: {
       return state
     }

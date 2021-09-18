@@ -13,16 +13,18 @@ const ProtectedRoutes = () => {
   useEffect(() => {
     ( async () => {
       const chs = await getChannels();
-      dispatch(SET_CHANNELS(chs.data));
+      const action = SET_CHANNELS(chs.data);
+      dispatch(action);
     })();
-  }, []);
+  });
 
   useEffect(()=>{
     ( async () => {
       const trgs = await getTriggers();
-      dispatch(SET_TRIGGERS(trgs.data));
+      const action = SET_TRIGGERS(trgs.data);
+      dispatch(action);
     })();
-  }, []);
+  });
 
   return (
     <>

@@ -14,7 +14,7 @@ const useStyles = makeStyles({
 })
   
 const FilterForm = ({onSubmit}) => {
-  const {channels, triggers} = useSelector((store) => store);
+  const {channels, triggers} = useSelector((state) => state);
   
   const classes = useStyles();
   const [formChannel, setFormChannel] = useState('');
@@ -43,7 +43,7 @@ const FilterForm = ({onSubmit}) => {
             id: 'channel_select',
           }}
         >
-          <MenuItem aria-label='None' value="" />
+          <MenuItem aria-label='None' value=""></MenuItem>
           {
             channels.map((channel, idx) => (
               <MenuItem key={idx} value={channel.name}>

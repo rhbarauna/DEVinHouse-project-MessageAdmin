@@ -82,9 +82,6 @@ const Home = () => {
       >
         <div className={classes.content}>
           <FilterForm onSubmit={handleFormSubmit}/>
-
-          {loading && <LinearProgress />}
-          {!loading && 
             <TableContainer>
               <Table aria-label="simple table">
                 <TableHead>
@@ -95,24 +92,24 @@ const Home = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {
-                    messages.map(
-                      (message, idx) => (
-                        <TableRow key={idx}
-                          hover
-                          className={classes.tr}
-                          onClick={()=>{ showMessage(message)}}>
-                          <TableCell>{message.channel}</TableCell>
-                          <TableCell>{message.trigger}</TableCell>
-                          <TableCell>{message.timer}</TableCell>
-                        </TableRow>
-                      )
+                {loading && <TableRow><TableCell colSpan={3}><LinearProgress /></TableCell></TableRow>}
+                {!loading && 
+                  messages.map(
+                    (message, idx) => (
+                      <TableRow key={idx}
+                        hover
+                        className={classes.tr}
+                        onClick={()=>{ showMessage(message)}}>
+                        <TableCell>{message.channel}</TableCell>
+                        <TableCell>{message.trigger}</TableCell>
+                        <TableCell>{message.timer}</TableCell>
+                      </TableRow>
                     )
-                  }
+                  )
+                }
                 </TableBody>
               </Table>
             </TableContainer>
-          }
         </div>
       </ContentWrapper>
       
