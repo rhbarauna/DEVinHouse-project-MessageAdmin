@@ -44,7 +44,7 @@ const Home = () => {
     })();
   }, []);
 
-  const handleFormSubmit = async ({channel, trigger, timer}) => {
+  const handleFormFilterSubmit = async ({channel, trigger, timer}) => {
     const msgs = await getMessages(`?channel=${channel}&trigger=${trigger}&timer=${timer}`);
     updateMessages(msgs);
   }
@@ -80,7 +80,7 @@ const Home = () => {
         }}
       >
         <div className={classes.content}>
-          <FilterForm onSubmit={handleFormSubmit}/>
+          <FilterForm onSubmit={handleFormFilterSubmit}/>
           <MessageTable
             data={messages}
             onRowClick={(message)=>{showMessage(message)}} 

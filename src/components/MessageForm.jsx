@@ -78,6 +78,7 @@ const MessageForm = ({ onAddMessage, onClose }) => {
       
       await validateForm(formData)
       await saveMessage(formData);
+      
 
       enqueueSnackbar('Mensagem registrada com sucesso', {variant: 'success'});
       onAddMessage();

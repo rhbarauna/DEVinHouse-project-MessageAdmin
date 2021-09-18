@@ -6,7 +6,7 @@ const api = create({
 });
 
 const saveMessage = async (formData) => {
-  return await api.post('/message', formData);
+  return await api.post('/message', {...formData});
 }
 
 const getMessages = async (filter= '') => {
