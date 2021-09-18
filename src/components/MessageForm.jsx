@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { TextField, Button, FormControl, InputLabel,
-  MenuItem, Select, DialogActions, makeStyles} from '@material-ui/core';
+  MenuItem, Select, DialogActions, makeStyles, FormHelperText} from '@material-ui/core';
 import { Modal } from '.';
 import { useSnackbar } from 'notistack';
 import * as yup from 'yup';
@@ -34,13 +34,40 @@ const MessageForm = ({ onAddMessage, onClose }) => {
 
   const [formChannel, setFormChannel] = useState('');
   const [formTrigger, setFormTrigger] = useState('');
-  const [formTimer, setFormTimer] = useState('');
+  const [formTimer, setFormTimer]     = useState('');
   const [formMessage, setFormMessage] = useState('');
 
-  const [channelError, setChannelError] = useState(false);
-  const [triggerError, setTriggerError] = useState(false);
-  const [timerError, setTimerError] = useState(false);
-  const [messageError, setMessageError] = useState(false);
+  const [channelError, setChannelError] = useState('');
+  const [triggerError, setTriggerError] = useState('');
+  const [timerError, setTimerError]     = useState('');
+  const [messageError, setMessageError] = useState('');
+
+  const validateForm = async (data) => {
+    try{
+      await messageSchema.validate(data, {
+        abortEarly: false
+      });
+    } catch(e){
+      e.inner.forEach(({message, path}) => {
+        switch(path){
+          case 'channel':
+            setChannelError(message);
+            return;
+          case 'trigger':
+            setTriggerError(message);
+            return;
+          case 'timer':
+            setTimerError(message);
+            return;
+          case 'message':
+          default:
+            setMessageError(message);
+            return;
+        }
+      });
+      throw e;
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,31 +78,15 @@ const MessageForm = ({ onAddMessage, onClose }) => {
         timer: formTimer,
         message: formMessage
       }
-
-      await messageSchema.validate(formData, {
-        abortEarly: false
-      });
-    
+      
+      await validateForm(formData)
       await saveMessage(formData);
 
       enqueueSnackbar('Mensagem registrada com sucesso', {variant: 'success'});
       onAddMessage();
     }catch(e){
-      console.dir(e);
       if(e.name === 'ValidationError'){
-        e.inner.forEach(error => {
-          switch(error.path){
-            case 'channel':
-              return setChannelError(true);
-            case 'trigger':
-              return setTriggerError(true);
-            case 'timer':
-              return setTimerError(true);
-            case 'message':
-            default:
-              return setMessageError(true);
-          }
-        });
+        return;
       }
       enqueueSnackbar(e.message, {variant: 'error'});
     }
@@ -87,10 +98,11 @@ const MessageForm = ({ onAddMessage, onClose }) => {
       title='Nova Mensagem'
     >
         <form className={classes.addForm} onSubmit={handleSubmit}>
-          <FormControl fullWidth variant="outlined">
+          <FormControl fullWidth variant="outlined"
+            error={channelError}
+          >
             <InputLabel htmlFor="channel_select">Canal</InputLabel>
             <Select
-              error={channelError}
               label="Canal"
               value={formChannel}
               onChange={(e)=> {
@@ -111,11 +123,13 @@ const MessageForm = ({ onAddMessage, onClose }) => {
                 ))
               }
             </Select>
+            <FormHelperText>{channelError}</FormHelperText>
           </FormControl>
-          <FormControl fullWidth variant="outlined">
+          <FormControl fullWidth variant="outlined"
+            error={triggerError}
+          >
             <InputLabel htmlFor="trigger_select">Gatilho</InputLabel>
             <Select
-              error={triggerError}
               label="Gatilho"
               value={formTrigger}
               onChange={(e)=>
@@ -138,10 +152,12 @@ const MessageForm = ({ onAddMessage, onClose }) => {
                 ))
               }
             </Select>
+            <FormHelperText>{triggerError}</FormHelperText>
           </FormControl>
           <FormControl fullWidth variant="outlined">
             <TextField 
               error={timerError}
+              helperText={timerError}
               variant='outlined'
               id='timer_input'
               name="timer"
@@ -158,6 +174,7 @@ const MessageForm = ({ onAddMessage, onClose }) => {
             <TextField 
               multiline
               error={messageError}
+              helperText={messageError}
               variant='outlined'
               id='message_input'
               name="message"
