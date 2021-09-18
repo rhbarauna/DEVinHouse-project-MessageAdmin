@@ -6,6 +6,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Butto
 } from '@material-ui/core';
 import { FilterForm, MessageDetails, MessageForm } from '../components';
 import {makeStyles} from '@material-ui/core';
+import {getMessages as getApiMessages} from '../services/api';
 
 const useStyles = makeStyles(
   (theme) => ({
@@ -26,11 +27,10 @@ const Home = () => {
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const getMessages = async (filter='') => {
+  const getMessages = async (filter) => {
     setLoading(true);
-    let url = `api/messages${filter}`;
-    const response = await fetch(url);
-    return await response.json();
+    const messages = await getApiMessages(filter);
+    return messages.data;
   }
 
   const updateMessages = (msgs) => {

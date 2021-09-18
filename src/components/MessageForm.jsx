@@ -5,6 +5,7 @@ import { Modal } from '.';
 import { useSnackbar } from 'notistack';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
+import { saveMessage } from '../services/api';
 
 const useStyles = makeStyles({
   addForm: {
@@ -55,10 +56,7 @@ const MessageForm = ({ onAddMessage, onClose }) => {
         abortEarly: false
       });
     
-      await fetch('api/message', {
-        method: 'POST',
-        body: formData
-      })
+      await saveMessage(formData);
 
       enqueueSnackbar('Mensagem registrada com sucesso', {variant: 'success'});
       onAddMessage();

@@ -5,23 +5,22 @@ import { useEffect } from "react";
 import {useDispatch} from 'react-redux';
 import { SET_CHANNELS } from "../stores/channel/actions";
 import { SET_TRIGGERS } from "../stores/trigger/actions";
+import {getTriggers, getChannels} from '../services/api';
 
 const ProtectedRoutes = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
     ( async () => {
-      const response = await fetch('api/channels');
-      const chs = await response.json();
-      dispatch(SET_CHANNELS(chs));
+      const chs = await getChannels();
+      dispatch(SET_CHANNELS(chs.data));
     })();
   }, []);
 
   useEffect(()=>{
     ( async () => {
-      const response = await fetch('api/triggers');
-      const trgs = await response.json();
-      dispatch(SET_TRIGGERS(trgs));
+      const trgs = await getTriggers();
+      dispatch(SET_TRIGGERS(trgs.data));
     })();
   }, []);
 
