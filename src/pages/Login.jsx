@@ -1,20 +1,10 @@
-import { Container, makeStyles, Paper } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { Box, Button, Grid, Paper, Typography } from '@material-ui/core';
+import { useDispatch} from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
+import { FormInputText } from '../components';
 import {login} from "../stores/auth/actions";
 
-const useStyles = makeStyles((theme) => {
-  return {
-    loginContainer:{
-      width: '500px',
-      padding: theme.spacing(1),
-      margin: 'auto',
-      backgroundClor: theme.palette.background.main
-    }
-  }
-})
 const Login = () => {
-  const classes= useStyles();
   const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -28,21 +18,63 @@ const Login = () => {
   }
 
   return (
-    <Paper>
-      <Container className={classes.loginContainer}>
-        <form className="loginForm" method='POST' action="#" onSubmit={handleSubmit}>
-          <div className='inputWrapper'>
-            <label htmlFor='login_inp'>Login</label>
-            <input type="text" name='login' id='login_inp'/>
-          </div>
-          <div className='inputWrapper'>
-            <label htmlFor='password_inp'>Password</label>
-            <input type="password" name='password' id='password_inp'/>
-          </div>
-          <button type="submit"> Login </button>
-        </form>
-      </Container>
-    </Paper>
+    <Grid container component='main' sx={{ height: '100vh' }}>
+      <Grid item xs={false} sm={4} md={7}
+        sx={{
+          backgroundImage: 'url(https://source.unsplash.com/random)',
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: (t) =>
+            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      <Grid item xs={12} sm={8} md={5} component={Paper}>
+        <Box
+          sx={{
+            my: 8,
+            mx: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Box
+            component="form"
+            noValidate
+            method='POST'
+            sx={{ mt: 1 }}
+            onSubmit={handleSubmit}>
+              <FormInputText 
+                id='login_inp'
+                name='login'
+                label='Usuário' 
+              />
+              <FormInputText
+                secure
+                id='password_inp'
+                name='password'
+                label='Senha'
+                autoComplete="current-password"
+              />
+              <Button
+                type="Submit"
+                color='secondary'
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Login
+              </Button>
+            </Box>
+          <Box mt={5}>
+            <Typography variant='subtitle2'>
+              Basta apertar no botao de login sem preencher nada
+            </Typography>
+          </Box>
+        </Box>
+      </Grid>
+    </Grid>
   );
 }
 export default Login;
