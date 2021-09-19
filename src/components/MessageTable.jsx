@@ -1,5 +1,5 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, LinearProgress
-} from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer,
+  TableHead, TableRow} from '@material-ui/core';
 
 const MessageTable = ({data, onRowClick}) => {
   return (

@@ -1,5 +1,7 @@
 import { Container, makeStyles, Paper } from '@material-ui/core';
-import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router';
+import {login} from "../stores/auth/actions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -14,10 +16,15 @@ const useStyles = makeStyles((theme) => {
 const Login = () => {
   const classes= useStyles();
   const history = useHistory();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const { from } = location.state || { from: { pathname: "/" } };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    history.push('/');
+    const signIn = login({});
+    dispatch(signIn);
+    history.replace(from);
   }
 
   return (
@@ -25,11 +32,11 @@ const Login = () => {
       <Container className={classes.loginContainer}>
         <form className="loginForm" method='POST' action="#" onSubmit={handleSubmit}>
           <div className='inputWrapper'>
-            <label for='login_inp'>Login</label>
+            <label htmlFor='login_inp'>Login</label>
             <input type="text" name='login' id='login_inp'/>
           </div>
           <div className='inputWrapper'>
-            <label for='password_inp'>Password</label>
+            <label htmlFor='password_inp'>Password</label>
             <input type="password" name='password' id='password_inp'/>
           </div>
           <button type="submit"> Login </button>

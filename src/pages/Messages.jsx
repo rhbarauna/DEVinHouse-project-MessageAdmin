@@ -25,6 +25,13 @@ const Home = () => {
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  useEffect(()=>{
+    ( async () => {
+      const msgs = await getMessages()
+      updateMessages(msgs);
+    })();
+  }, []);
+
   const getMessages = async (filter) => {
     setLoading(true);
     const messages = await getApiMessages(filter);
@@ -35,13 +42,6 @@ const Home = () => {
     setLoading(false);
     setMessages(msgs);
   }
-
-  useEffect(()=>{
-    ( async () => {
-      const msgs = await getMessages()
-      updateMessages(msgs);
-    })();
-  }, []);
 
   const handleFormFilterSubmit = async ({channel, trigger, timer}) => {
     const msgs = await getMessages(`?channel=${channel}&trigger=${trigger}&timer=${timer}`);
