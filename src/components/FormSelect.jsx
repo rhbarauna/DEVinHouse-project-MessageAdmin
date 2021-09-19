@@ -16,7 +16,7 @@ const FormSelect = ({name, id, label, value, options, onChange, errorMessage=''}
             error={!!errorMessage}
             className={classes.formControl}
           >
-            <InputLabel htmlFor={id}>Canal</InputLabel>
+            <InputLabel htmlFor={id}>{label}</InputLabel>
             <Select
               label={label}
               value={value}

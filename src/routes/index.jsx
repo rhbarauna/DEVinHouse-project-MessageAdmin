@@ -26,9 +26,15 @@ const ProtectedRoutes = () => {
     })();
   });
 
+  const routes = [
+    { path: '/messages', label: 'Mensagens'},
+    { path: '/dashboard', label: 'Dashboard'},
+    { path: '/login', label: 'Login'},
+  ]
+
   return (
     <>
-     <Header />
+      <Header routes={routes}/>
       <div className="container pageWrapper">
         <Switch>
           <Route path='/dashboard' component={DashboardPage}/>

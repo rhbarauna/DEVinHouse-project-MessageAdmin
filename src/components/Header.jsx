@@ -31,18 +31,13 @@ const useStyles = makeStyles((theme)=>({
   }
 }))
 
-
-const Header = ({theme}) => {
+const Header = ({theme, routes}) => {
   const history = useHistory();
   const classes = useStyles(theme);
   const navigate = (route) => {
     history.push(route);
   }
-  const routes = [
-    { path: '/messages', label: 'Mensagens'},
-    { path: '/dashboard', label: 'Dashboard'},
-  ]
-
+  
   return <>
     <div className={classes.header}>
       <Container className={classes.flex}>

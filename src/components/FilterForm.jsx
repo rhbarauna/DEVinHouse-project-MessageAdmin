@@ -1,8 +1,7 @@
-import { Button, FormControl, InputLabel,
-  makeStyles,
-  MenuItem, Select, TextField} from '@material-ui/core';
+import { Button, makeStyles} from '@material-ui/core';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { FormInputText, FormSelect } from '.';
 
 const useStyles = makeStyles({
   searchForm: {
@@ -32,59 +31,35 @@ const FilterForm = ({onSubmit}) => {
 
   return (
     <form className={classes.searchForm} onSubmit={handleSubmit}>
-      <FormControl fullWidth variant="outlined">
-        <InputLabel htmlFor="channel_select">Canal</InputLabel>
-        <Select
-          label="Canal"
-          value={formChannel}
-          onChange={(e)=>setFormChannel(e.target.value)}
-          inputProps={{
-            name: 'channel',
-            id: 'channel_select',
-          }}
-        >
-          <MenuItem aria-label='None' value=""></MenuItem>
-          {
-            channels.map((channel, idx) => (
-              <MenuItem key={idx} value={channel.name}>
-                {channel.name}
-              </MenuItem>
-            ))
-          }
-        </Select>
-      </FormControl>
-      <FormControl fullWidth variant="outlined">
-        <InputLabel htmlFor="trigger_select">Gatilho</InputLabel>
-        <Select
-          label="Gatilho"
-          value={formTrigger}
-          onChange={(e)=>setFormTrigger(e.target.value)}
-          inputProps={{
-            name: 'trigger',
-            id: 'trigger_select',
-          }}
-        >
-          <MenuItem aria-label='None' value="" />
-          {
-            triggers.map((trigger, idx) => (
-              <MenuItem key={idx} value={trigger.name}>
-                {trigger.name}
-              </MenuItem>
-            ))
-          }
-        </Select>
-      </FormControl>
-      <FormControl fullWidth variant="outlined">
-        <TextField
-          variant='outlined'
-          id='timer_input'
-          name="timer"
-          label="Timer"
-          value={formTimer}
-          onChange={(e)=>setFormTimer(e.target.value)}
-        />
-      </FormControl>
-      <Button type='submit' variant="contained" color='secondary'>Filtrar</Button>
+      <FormSelect
+        id='channel_select'
+        name='channel'
+        label='Canal'
+        value={formChannel}
+        onChange={(e)=>setFormChannel(e.target.value)} 
+        options={channels}
+      />
+      <FormSelect
+        id='trigger_select'
+        name='trigger'
+        label="Gatilho"
+        value={formTrigger}
+        onChange={(e)=>setFormTrigger(e.target.value)}
+        options={triggers}
+      />
+      <FormInputText
+        id='timer_input'
+        name="timer"
+        label="Timer"
+        value={formTimer}
+        onChange={(e)=>setFormTimer(e.target.value)}
+      />
+      <Button 
+        type='submit'
+        variant="contained"
+        color='secondary'>
+        Filtrar
+      </Button>
     </form>
   )
 }
