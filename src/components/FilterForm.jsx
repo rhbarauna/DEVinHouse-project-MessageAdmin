@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   }
 })
   
-const FilterForm = ({onSubmit}) => {
+const FilterForm = ({onSubmit, id='', name=''}) => {
   const {channels, triggers} = useSelector((state) => state);
   
   const classes = useStyles();
@@ -30,7 +30,7 @@ const FilterForm = ({onSubmit}) => {
   }
 
   return (
-    <form className={classes.searchForm} onSubmit={handleSubmit}>
+    <form id={id} name={name} className={classes.searchForm} onSubmit={handleSubmit}>
       <FormSelect
         id='channel_select'
         name='channel'

@@ -1,9 +1,9 @@
 import Login from './Login';
-import Home from './Home';
+import Messages from './Messages';
 import Dashboard from './Dashboard';
 
 export {
   Dashboard, 
-  Home,
+  Messages,
   Login
 }

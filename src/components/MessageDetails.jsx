@@ -1,5 +1,5 @@
 import { Grid, Typography, makeStyles, DialogContentText } from "@material-ui/core";
-import { Modal } from ".";
+import { Modal } from "./";
 
 const useStyles = makeStyles((theme) => ({
   label: {

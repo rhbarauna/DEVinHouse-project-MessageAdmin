@@ -1,7 +1,18 @@
+import { Container, makeStyles, Paper } from '@material-ui/core';
 import { useHistory } from 'react-router';
-import './index.css';
 
+const useStyles = makeStyles((theme) => {
+  return {
+    loginContainer:{
+      width: '500px',
+      padding: theme.spacing(1),
+      margin: 'auto',
+      backgroundClor: theme.palette.background.main
+    }
+  }
+})
 const Login = () => {
+  const classes= useStyles();
   const history = useHistory();
 
   const handleSubmit = (event) => {
@@ -10,8 +21,8 @@ const Login = () => {
   }
 
   return (
-    <>
-      <div className="paper container loginContainer">
+    <Paper>
+      <Container className={classes.loginContainer}>
         <form className="loginForm" method='POST' action="#" onSubmit={handleSubmit}>
           <div className='inputWrapper'>
             <label for='login_inp'>Login</label>
@@ -23,8 +34,8 @@ const Login = () => {
           </div>
           <button type="submit"> Login </button>
         </form>
-      </div>
-    </>
+      </Container>
+    </Paper>
   );
 }
 export default Login;

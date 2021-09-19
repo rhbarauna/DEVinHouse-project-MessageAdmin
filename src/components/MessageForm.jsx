@@ -19,7 +19,7 @@ const messageSchema = yup.object().shape({
   trigger: yup.string().required('Escolha o gatilho da mensagem'),
   timer: yup.string()
     .required('Informe o horario da mensagem')
-    .matches(/^[0-9]+:[0-5][0-9]$/, "Pecisa estar no formato H(H...):MM"),
+    .matches(/^[0-9]+:[0-5][0-9]$/, "Precisa estar no formato H(H...):MM (somente números)"),
   message: yup.string().required('Informe a mensagem'),
 });
 

@@ -1,5 +1,5 @@
-import GraphOne from './components/GraphOne';
-import GraphTwo from './components/GraphTwo';
+import GraphOne from '../components/GraphOne';
+import GraphTwo from '../components/GraphTwo';
 
 const Dashboard = () => {
 
@@ -13,6 +13,8 @@ const Dashboard = () => {
     <>
       <div style={{backgroundColor: 'white', padding: '10px', borderRadius: '5px'}}>
         <GraphOne 
+          title='Contas abertas - BOT'
+          label='Quantidade de contas abertas'
           dataSet={graphOneData}
         />
         <hr />

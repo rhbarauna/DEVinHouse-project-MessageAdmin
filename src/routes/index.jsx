@@ -1,5 +1,5 @@
 import { Switch, Route, Redirect } from "react-router"
-import {Dashboard as DashboardPage, Home as HomePage, Login as LoginPage} from '../pages';
+import {Dashboard as DashboardPage, Messages as MessagesPage, Login as LoginPage} from '../pages';
 import {Header} from '../components';
 import { useEffect } from "react";
 import {useDispatch} from 'react-redux';
@@ -7,7 +7,14 @@ import { SET_CHANNELS } from "../stores/channel/actions";
 import { SET_TRIGGERS } from "../stores/trigger/actions";
 import {getTriggers, getChannels} from '../services/api';
 
-const ProtectedRoutes = () => {
+
+const routes = [
+  { path: '/messages', label: 'Mensagens'},
+  { path: '/dashboard', label: 'Dashboard'},
+  { path: '/login', label: 'Login'},
+]
+
+const Routes = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -26,35 +33,23 @@ const ProtectedRoutes = () => {
     })();
   });
 
-  const routes = [
-    { path: '/messages', label: 'Mensagens'},
-    { path: '/dashboard', label: 'Dashboard'},
-    { path: '/login', label: 'Login'},
-  ]
-
-  return (
-    <>
-      <Header routes={routes}/>
-      <div className="container pageWrapper">
-        <Switch>
-          <Route path='/dashboard' component={DashboardPage}/>
-          <Route path='/messages' component={HomePage}/>
-          <Route path='/' exact>
-            <Redirect to="/messages" />
-          </Route>
-        </Switch>
-      </div>
-    </>
-  )
-}
-
-const Routes = () => {
   return (
     <>
       <Switch>
         <Route path='/login' component={LoginPage}/>
         <Route path='/'>
-          <ProtectedRoutes />          
+          <>
+            <Header routes={routes}/>
+            <div className="container pageWrapper">
+              <Switch>
+                <Route path='/dashboard' component={DashboardPage}/>
+                <Route path='/messages' component={MessagesPage}/>
+                <Route path='/' exact>
+                  <Redirect to="/messages" />
+                </Route>
+              </Switch>
+            </div>
+          </>
         </Route>
       </Switch>
     </>

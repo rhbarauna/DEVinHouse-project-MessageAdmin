@@ -1,6 +1,6 @@
 import { Box, Paper } from '@material-ui/core';
 import React from 'react';
-import { PageContentHeader } from '../../components';
+import { PageContentHeader } from '.';
 
 const ContentWrapper = ({header, children, ...props}) => {
   return (

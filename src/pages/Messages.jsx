@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import ContentWrapper from './components/ContentWrapper';
 import ForumIcon from '@material-ui/icons/Forum';
 import AddCommentIcon from '@material-ui/icons/AddComment';
 import { Button, LinearProgress } from '@material-ui/core';
-import { FilterForm, MessageDetails, MessageForm, MessageTable } from '../components';
+import { ContentWrapper, FilterForm, MessageDetails, MessageForm, MessageTable } from '../components';
 import {makeStyles} from '@material-ui/core';
 import {getMessages as getApiMessages} from '../services/api';
 

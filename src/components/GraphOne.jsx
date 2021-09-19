@@ -1,27 +1,18 @@
 import { useEffect } from 'react';
 import {Bar} from 'react-chartjs-2';
 
-// Math.floor(Math.random()*16777215).toString(16);
-const GraphOne = ({dataSet}) => {
+const getRandomColor = () => Math.floor(Math.random()*16777215).toString(16);
+
+const GraphOne = ({title, label, dataSet}) => {
   const graphData = {
     labels: [],
     datasets: [
       {
-        label: 'Quantidade de contas abertas',
-        data: [2400, 1300, 520, 1000],
+        label: label,
+        data: [],
         fill: false,
-        backgroundColor: [
-          'rgba(0, 0, 140, 1)',
-          'rgba(0, 120, 0, 1)',
-          'rgba(0, 100, 220, 1)',
-          'rgba(120, 0, 50, 1)',
-        ],
-        borderColor: [
-          'rgba(0, 0, 140, 1)',
-          'rgba(0, 120, 0, 1)',
-          'rgba(0, 100, 220, 1)',
-          'rgba(120, 0, 50, 1)',
-        ],
+        backgroundColor: [],
+        borderColor: [],
         borderWidth: 1,
       },
     ],
@@ -42,17 +33,20 @@ const GraphOne = ({dataSet}) => {
       },
       title: {
         display: true,
-        text: 'Contas abertas - BOT',
+        text: title,
       },
     },
   };
 
-  // useEffect(()=>{
-  //   dataSet.forEach( data => {
-  //     graphData.labels.push(data.label);
-  //     graphData.datasets[0]
-  //   })
-  // }, [dataSet])
+  useEffect(()=>{
+    dataSet.forEach( ({label, value, color}) => {
+      const dataColor = color || `#${getRandomColor()}`;
+      graphData.labels.push(label);
+      graphData.datasets[0].data.push(value);
+      graphData.datasets[0].backgroundColor.push(dataColor);
+      graphData.datasets[0].borderColor.push(dataColor);
+    })
+  }, [dataSet])
 
   return (
     <>

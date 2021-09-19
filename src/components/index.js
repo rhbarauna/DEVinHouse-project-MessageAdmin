@@ -1,3 +1,4 @@
+import ContentWrapper from './ContentWrapper'
 import FilterForm from'./FilterForm';
 import Header from './Header';
 import PageContentHeader from './PageContentHeader';
@@ -9,6 +10,7 @@ import MessageTable from './MessageTable';
 import Modal from './Modal';
 
 export {
+  ContentWrapper,
   FilterForm,
   Header,
   MessageDetails,
