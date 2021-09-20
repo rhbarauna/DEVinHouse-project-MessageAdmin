@@ -1,4 +1,4 @@
-import { Container, makeStyles } from '@material-ui/core';
+import { Box, Container, makeStyles, Slide } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
@@ -38,28 +38,31 @@ const Header = ({theme, routes}) => {
     history.push(route);
   }
   
-  return <>
-    <div className={classes.header}>
-      <Container className={classes.flex}>
-        <Link to='/'>
-          <h1 className={classes.h1}>NAV</h1>
-        </Link>
-        <nav>
-          <ul className={classes.flex}>
-            {
-              routes.map(
-                (route, idx) => (
-                  <li className={classes.li} key={idx} onClick={()=>{navigate(route.path)}}>
-                    {route.label}
-                  </li>
+  return (
+    <Slide direction="down" in mountOnEnter unmountOnExit>
+      <div className={classes.header}>
+        <Container className={classes.flex}>
+          <Link to='/'>
+
+            <h1 className={classes.h1}>NAV</h1>
+          </Link>
+          <nav>
+            <Box component='ul' className={classes.flex}>
+              {
+                routes.map(
+                  (route, idx) => (
+                    <li className={classes.li} key={idx} onClick={()=>{navigate(route.path)}}>
+                      {route.label}
+                    </li>
+                  )
                 )
-              )
-            }
-          </ul>
-        </nav>
-      </Container>
-    </div>
-  </>  
+              }
+            </Box>
+          </nav>
+        </Container>
+      </div>
+    </Slide>
+  )
 }
 
 export default Header;
