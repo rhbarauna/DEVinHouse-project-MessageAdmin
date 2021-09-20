@@ -26,10 +26,10 @@ const FormSelect = ({name, id, label, value, options, onChange, errorMessage=''}
                 id: {id},
               }}
             >
-              <MenuItem aria-label='None' value="" />
+              <MenuItem style={{minHeight: '36px'}} aria-label='None' value="" />
               {
                 options.map((opt, idx) => (
-                  <MenuItem key={idx} value={opt.name}>
+                  <MenuItem style={{minHeight: '36px'}} key={idx} value={opt.name}>
                     {opt.name}
                   </MenuItem>
                 ))

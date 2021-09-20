@@ -1,17 +1,13 @@
+import { useEffect } from 'react';
 import {Line} from 'react-chartjs-2';
 
-const GraphTwo = () => {
-  const data = {
-    labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+const GraphTwo = ({title, label, dataSet}) => {
+  const graphData = {
+    labels: [],
     datasets: [
       {
-        label: 'Quantidade de transações PIX',
-        data: [
-          2400, 1300, 520, 1000,
-          3400, 300, 3520, 900,
-          4400, 2300, 1520, 700,
-          5400, 1300, 7520, 3000
-        ],
+        label,
+        data: [],
         fill: false,
         backgroundColor: [
           'rgba(120, 0, 50, 1)',
@@ -42,11 +38,18 @@ const GraphTwo = () => {
     },
   };
 
+  useEffect(()=>{
+    dataSet.forEach( ({label, value}) => {
+      graphData.labels.push(label);
+      graphData.datasets[0].data.push(value);
+    })
+  }, [])
+
   return (
     <>
       <div style={{backgroundColor: 'white', padding: '10px', borderRadius: '5px'}}>
         <Line
-          data={data}
+          data={graphData}
           height={300}
           options={options}
         />

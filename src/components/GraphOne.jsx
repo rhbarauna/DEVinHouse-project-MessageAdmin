@@ -8,7 +8,7 @@ const GraphOne = ({title, label, dataSet}) => {
     labels: [],
     datasets: [
       {
-        label: label,
+        label,
         data: [],
         fill: false,
         backgroundColor: [],
@@ -46,7 +46,7 @@ const GraphOne = ({title, label, dataSet}) => {
       graphData.datasets[0].backgroundColor.push(dataColor);
       graphData.datasets[0].borderColor.push(dataColor);
     })
-  }, [dataSet])
+  }, [])
 
   return (
     <>

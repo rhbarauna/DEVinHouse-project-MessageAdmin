@@ -10,7 +10,7 @@ import {getTriggers, getChannels} from '../services/api';
 const PrivateRoutes = ({redirectTo='/login', children, ...props}) => {
   const {auth} = useSelector(state => state);
   const dispatch = useDispatch()
-console.log(auth)
+
   useEffect(() => {
     ( async () => {
       const chs = await getChannels();
