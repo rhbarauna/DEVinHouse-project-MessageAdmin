@@ -1,20 +1,26 @@
-import { Box, Button, Grid, Paper, Typography } from '@material-ui/core';
+import { Avatar, Backdrop, Box, Button, CircularProgress, Grid, Paper, Typography } from '@material-ui/core';
 import { useDispatch} from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import { FormInputText } from '../components';
 import {login} from "../stores/auth/actions";
+import {LockOutlined} from '@material-ui/icons';
+import { useState } from 'react';
 
 const Login = () => {
   const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
   const { from } = location.state || { from: { pathname: "/" } };
-
+  const [open, setOpen] = useState(false);
+  
   const handleSubmit = (event) => {
     event.preventDefault();
-    const signIn = login({});
-    dispatch(signIn);
-    history.replace(from);
+    setOpen(true)
+    setTimeout(()=>{
+      const signIn = login({});
+      dispatch(signIn);
+      history.replace(from);
+    }, 2000);
   }
 
   return (
@@ -30,20 +36,24 @@ const Login = () => {
         }}
       />
       <Grid item xs={12} sm={8} md={5} component={Paper} square>
-        <Box
-          my={8}
-          mx={4}
+        <Box my={8} mx={4}
           style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
+           <Avatar style={{ margin: '1px', backgrounColor: 'secondary' }}>
+              <LockOutlined />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
           <Box
             component="form"
             noValidate
             method='POST'
-            mt={1}
+            mt={4}
             onSubmit={handleSubmit}>
               <FormInputText 
                 id='login_inp'
@@ -63,17 +73,23 @@ const Login = () => {
                 color='secondary'
                 fullWidth
                 variant="contained"
-                style={{ marginTop: 3, marginBottom: 2 }}
+                style={{ marginTop: 5}}
               >
                 Login
               </Button>
-            </Box>
+          </Box>
           <Box mt={5}>
             <Typography variant='subtitle2'>
               Basta apertar no botao de login sem preencher nada
             </Typography>
           </Box>
         </Box>
+        <Backdrop
+          style={{ color: '#fff', zIndex: 1 }}
+          open={open}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
       </Grid>
     </Grid>
   );
