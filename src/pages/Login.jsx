@@ -44,7 +44,16 @@ const Login = () => {
             alignItems: 'center',
           }}
         >
+          
           <img src={logo} className="App-logo" alt="logo" />
+          <Box>
+            <Typography component="h1" variant="h5">
+              Messages
+            </Typography>
+            <Typography component="h5" variant="overline" align='right'>
+              Admin
+            </Typography>
+          </Box>
           <Box
             component="form"
             noValidate
