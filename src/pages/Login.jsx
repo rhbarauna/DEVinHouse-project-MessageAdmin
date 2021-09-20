@@ -4,6 +4,7 @@ import { useHistory, useLocation } from 'react-router';
 import { FormInputText } from '../components';
 import {login} from "../stores/auth/actions";
 import {LockOutlined} from '@material-ui/icons';
+import logo from '../logo.png';
 import { useState } from 'react';
 
 const Login = () => {
@@ -43,12 +44,7 @@ const Login = () => {
             alignItems: 'center',
           }}
         >
-           <Avatar style={{ margin: '1px', backgrounColor: 'secondary' }}>
-              <LockOutlined />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
+          <img src={logo} className="App-logo" alt="logo" />
           <Box
             component="form"
             noValidate
