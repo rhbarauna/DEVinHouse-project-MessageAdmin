@@ -18,9 +18,9 @@ const Login = () => {
   }
 
   return (
-    <Grid container component='main' sx={{ height: '100vh' }}>
+    <Grid container component='main' style={{ height: '100vh' }}>
       <Grid item xs={false} sm={4} md={7}
-        sx={{
+        style={{
           backgroundImage: 'url(https://source.unsplash.com/random)',
           backgroundRepeat: 'no-repeat',
           backgroundColor: (t) =>
@@ -31,7 +31,7 @@ const Login = () => {
       />
       <Grid item xs={12} sm={8} md={5} component={Paper} square>
         <Box
-          sx={{
+          style={{
             my: 8,
             mx: 4,
             display: 'flex',
