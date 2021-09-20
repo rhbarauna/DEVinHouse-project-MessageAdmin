@@ -29,7 +29,7 @@ const Login = () => {
           backgroundPosition: 'center',
         }}
       />
-      <Grid item xs={12} sm={8} md={5} component={Paper}>
+      <Grid item xs={12} sm={8} md={5} component={Paper} square>
         <Box
           sx={{
             my: 8,
@@ -51,7 +51,7 @@ const Login = () => {
                 label='Usuário' 
               />
               <FormInputText
-                secure
+                type='password'
                 id='password_inp'
                 name='password'
                 label='Senha'
