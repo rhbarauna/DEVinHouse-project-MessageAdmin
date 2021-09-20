@@ -18,7 +18,7 @@ const theme = createTheme({
       contrastText: 'white'
     },
     background: {
-      app: '#28334780'
+      app: '#cccac7'
     },
     contrastThreshold: 3,
     tonalOffset: 0.2,
