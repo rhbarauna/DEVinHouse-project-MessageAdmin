@@ -31,9 +31,9 @@ const Login = () => {
       />
       <Grid item xs={12} sm={8} md={5} component={Paper} square>
         <Box
+          my={8}
+          mx={4}
           style={{
-            my: 8,
-            mx: 4,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -43,12 +43,13 @@ const Login = () => {
             component="form"
             noValidate
             method='POST'
-            sx={{ mt: 1 }}
+            mt={1}
             onSubmit={handleSubmit}>
               <FormInputText 
                 id='login_inp'
                 name='login'
                 label='Usuário' 
+                autoFocus
               />
               <FormInputText
                 type='password'
@@ -62,7 +63,7 @@ const Login = () => {
                 color='secondary'
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                style={{ marginTop: 3, marginBottom: 2 }}
               >
                 Login
               </Button>
