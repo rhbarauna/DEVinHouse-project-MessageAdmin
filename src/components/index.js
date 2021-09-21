@@ -1,4 +1,5 @@
-import ContentWrapper from './ContentWrapper'
+import ContentWrapper from './ContentWrapper';
+import Drawer from './Drawer';
 import FilterForm from'./FilterForm';
 import Header from './Header';
 import PageContentHeader from './PageContentHeader';
@@ -11,6 +12,7 @@ import Modal from './Modal';
 
 export {
   ContentWrapper,
+  Drawer,
   FilterForm,
   Header,
   MessageDetails,
