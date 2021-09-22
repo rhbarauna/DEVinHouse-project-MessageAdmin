@@ -5,8 +5,8 @@ import PrivateRoutes from "./PrivateRoutes";
 import { Box, Toolbar } from "@material-ui/core";
 
 const routes = [
-  { path: '/messages', label: 'Mensagens'},
   { path: '/dashboard', label: 'Dashboard'},
+  { path: '/messages', label: 'Mensagens'},
 ]
 
 const Routes = () => {
@@ -18,13 +18,13 @@ const Routes = () => {
           <Header/>
           <Box display='flex'>
             <Drawer routes={routes} />
-            <Box component="main" flexGrow={1} p={3}>
-            <Toolbar />
-            <Switch>
-              <Route path='/dashboard' component={DashboardPage}/>
-              <Route path='/messages' component={MessagesPage}/>
-              <Route path='/' render={()=><></>} exact />
-            </Switch>
+            <Box component="main" flexGrow={1} p={1}>
+              <Toolbar />
+              <Switch>
+                <Route path='/dashboard' component={DashboardPage}/>
+                <Route path='/messages' component={MessagesPage}/>
+                <Route path='/' render={()=><></>} exact />
+              </Switch>
             </Box>
           </Box>
         </PrivateRoutes>

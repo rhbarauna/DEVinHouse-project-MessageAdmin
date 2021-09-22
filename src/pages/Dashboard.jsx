@@ -1,5 +1,7 @@
+import { ContentWrapper } from '../components';
 import GraphOne from '../components/GraphOne';
 import GraphTwo from '../components/GraphTwo';
+import BarChartIcon from '@material-ui/icons/BarChart';
 
 const Dashboard = () => {
 
@@ -31,18 +33,26 @@ const Dashboard = () => {
   
   return (
     <>
-      <div style={{backgroundColor: 'white', padding: '10px', borderRadius: '5px'}}>
-        <GraphOne 
-          title='Contas abertas - BOT'
-          label='Quantidade de contas abertas'
-          dataSet={graphOneData}
-        />
-        <hr />
-        <GraphTwo
-          label='Quantidade de transações PIX'
-          dataSet={graphTwoData}
-        />
-      </div>
+      <ContentWrapper
+        header={{
+          bgColor:'transparent',
+          title: 'Dashboard',
+          leftIcon: BarChartIcon
+        }}
+      >
+        <div style={{backgroundColor: 'white', padding: '10px', borderRadius: '5px'}}>
+          <GraphOne 
+            title='Contas abertas - BOT'
+            label='Quantidade de contas abertas'
+            dataSet={graphOneData}
+          />
+          <hr />
+          <GraphTwo
+            label='Quantidade de transações PIX'
+            dataSet={graphTwoData}
+          />
+        </div>
+      </ContentWrapper>
     </>
   )
 }

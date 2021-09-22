@@ -1,56 +1,63 @@
 import { Box, Drawer as MuiDrawer, List, ListItem, ListItemIcon,
-  ListItemText, makeStyles, Toolbar } from "@material-ui/core";
-import { Link } from "react-router-dom";
+  ListItemText, makeStyles, Slide, Toolbar } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
+const drawerWidth = 200
 const buildStyles = makeStyles((theme) => ({
   drawer:{
-    width: 240,
+    width: drawerWidth,
     flexShrink: 0,
-    [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box' },
+    [`& .MuiDrawer-paper`]: {
+      width: drawerWidth,
+      boxSizing: 'border-box'
+    },
   },
   li:{
-    padding: '15px 10px',
-    borderRadius: '5px',
-    textAlign: 'center',
-    fontWeight: 600,
     '&:hover': {
       cursor: 'pointer',
-      backgroundColor: '#f1f1f125',
-      textShadow: '1px 0px 5px #51515135',
+      backgroundColor: '#f1f1f1',
     }
   },
 }))
 
 const Drawer = ({routes=[], ...props}) => {
   const styles = buildStyles();
+  const {push} = useHistory();
+
+  const pushTo = (path) => {
+    push(path);
+  }
+
   return (
     <>
-      <MuiDrawer
-        variant='permanent'
-        anchor='left'
-        className={styles.drawer}
-      >
-        <Toolbar />
-        <Box component='nav' overflow='auto'>
-          <List>
-            {
-              routes.map(
-                ({path, label, icon}, idx) => (
-                  <ListItem>
-                    <Link key={idx} to={path}>
+      <Slide direction="right" in mountOnEnter unmountOnExit>
+        <MuiDrawer
+          variant='permanent'
+          anchor='left'
+          className={styles.drawer}
+        >
+          <Toolbar />
+          <Box component='nav' overflow='auto'>
+            <List>
+              {
+                routes.map(
+                  ({path, label, icon}, idx) => (
+                    <ListItem key={idx}
+                      className={styles.li}
+                      onClick={()=> pushTo(path)}>
                       {icon && <ListItemIcon></ListItemIcon> }
                       <ListItemText>{label}</ListItemText>
-                    </Link>
-                  </ListItem>
+                    </ListItem>
+                  )
                 )
-              )
-            }
-          </List>
-          <Box display='flex' flexDirection='column'>
-            
+              }
+            </List>
+            <Box display='flex' flexDirection='column'>
+              
+            </Box>
           </Box>
-        </Box>
-      </MuiDrawer>
+        </MuiDrawer>
+      </Slide>
     </>
   )
 }

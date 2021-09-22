@@ -1,7 +1,7 @@
 import { AUTH_ACTIONS } from "./actions";
 
 const INITIAL_STATE = {
-  loggedIn: false
+  loggedIn: true
 };
 
 const reducer = (state= INITIAL_STATE, action) => {
